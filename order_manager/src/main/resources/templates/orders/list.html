@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý đơn hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .filter-form label, .filter-form input, .filter-form button {
+            font-size: 16px;
+        }
+
+        .filter-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .filter-form button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .edit-link {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .edit-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Quản lý đơn hàng</h1>
+    <form class="filter-form" th:action="@{/orders}" method="get">
+        <div>
+            <label for="startDate">Ngày bắt đầu:</label>
+            <input type="date" id="startDate" name="startDate" th:value="${startDate}" required>
+        </div>
+        <div>
+            <label for="endDate">Ngày kết thúc:</label>
+            <input type="date" id="endDate" name="endDate" th:value="${endDate}" required>
+        </div>
+        <div>
+            <label for="limit">Số lượng:</label>
+            <input type="number" id="limit" name="limit" th:value="${limit}" min="1" required>
+        </div>
+        <button type="submit">Xem danh sách</button>
+    </form>
+
+    <h2>Danh sách đơn hàng</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Mã đơn hàng</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Loại sản phẩm</th>
+            <th>Ngày mua</th>
+            <th>Số lượng</th>
+            <th>Tổng tiền</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order, iterStat : ${orders}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.product.name}"></td>
+            <td th:text="${#numbers.formatDecimal(order.product.price, 1, 0)}"></td>
+            <td th:text="${order.product.category.name}"></td>
+            <td th:text="${order.orderDateStr}"></td>
+            <td th:text="${order.quantity}"></td>
+            <td th:text="${#numbers.formatDecimal(order.product.price * order.quantity, 1, 0)}"></td>
+            <td><a th:href="@{/orders/edit/{id}(id=${order.id})}" class="edit-link">Sửa</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
