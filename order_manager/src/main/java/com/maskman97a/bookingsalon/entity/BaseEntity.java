@@ -1,6 +1,5 @@
 package com.maskman97a.bookingsalon.entity;
 
-import com.maskman97a.bookingsalon.dto.enums.DeleteEnum;
 import jakarta.persistence.*;
 import lombok.Generated;
 import lombok.Getter;
@@ -39,6 +38,6 @@ public class BaseEntity {
         this.createdBy = "admin";
         this.updatedAt = LocalDateTime.now();
         this.updatedBy = "admin";
-        this.isDeleted = DeleteEnum.NO.getValue();
+        this.isDeleted = 0;
     }
 }

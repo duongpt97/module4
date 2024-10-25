@@ -95,7 +95,7 @@
             <label for="limit">Số lượng:</label>
             <input type="number" id="limit" name="limit" th:value="${limit}" min="1" required>
         </div>
-        <button type="submit">Xem danh sách</button>
+        <button type="submit" onclick="return validateDates()">Xem danh sách</button>
     </form>
 
     <h2>Danh sách đơn hàng</h2>
@@ -129,5 +129,18 @@
     </table>
 </div>
 
+<script>
+    function validateDates() {
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+        if (endDate < startDate) {
+            alert("Ngày kết thúc phải lớn hơn ngày bắt đầu.");
+            return false;
+        }
+        return true;
+    }
+</script>
 </body>
 </html>
