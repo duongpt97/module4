@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý đơn hàng</title>
+    <title>Top Đơn Hàng</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -81,28 +81,7 @@
 <body>
 
 <div class="container">
-    <h1>Quản lý đơn hàng</h1>
-    <form class="filter-form" th:action="@{/orders}" method="get">
-        <div>
-            <label for="startDate">Ngày bắt đầu:</label>
-            <input type="date" id="startDate" name="startDate" th:value="${startDate}" required>
-        </div>
-        <div>
-            <label for="endDate">Ngày kết thúc:</label>
-            <input type="date" id="endDate" name="endDate" th:value="${endDate}" required>
-        </div>
-
-        <button type="submit" onclick="return validateDates()">Xem</button>
-    </form>
-    <form th:action="@{orders/top-orders}" method="get" style="margin-top: 20px;">
-        <div>
-            <label for="limit">Top:</label>
-            <input type="number" id="limit" name="limit" th:value="${limit}" min="1" required>
-            <span>đơn hàng có tổng tiền cao nhất</span>
-            <button type="submit">Xem top</button>
-        </div>
-    </form>
-    <h2>Danh sách đơn hàng</h2>
+    <h1>Top Đơn Hàng</h1>
     <table>
         <thead>
         <tr>
@@ -133,18 +112,5 @@
     </table>
 </div>
 
-<script>
-    function validateDates() {
-        const startDateInput = document.getElementById('startDate');
-        const endDateInput = document.getElementById('endDate');
-        const startDate = new Date(startDateInput.value);
-        const endDate = new Date(endDateInput.value);
-        if (endDate < startDate) {
-            alert("Ngày kết thúc phải lớn hơn ngày bắt đầu.");
-            return false;
-        }
-        return true;
-    }
-</script>
 </body>
 </html>

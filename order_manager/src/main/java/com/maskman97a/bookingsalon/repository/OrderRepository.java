@@ -16,4 +16,7 @@ public interface OrderRepository extends JpaRepository<OrdersEntity, Long> {
             " AND (:endDate IS NULL OR o.orderDate < date(adddate(:endDate, 1)) ) " +
             " ORDER BY o.orderDate DESC")
     List<OrdersEntity> findAllByOrderDateBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT o FROM OrdersEntity o ORDER BY o.product.price * o.quantity DESC LIMIT :limit")
+    List<OrdersEntity> findTopOrders(int limit);
 }

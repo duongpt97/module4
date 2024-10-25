@@ -24,9 +24,8 @@ public class OrderService extends BaseService {
         return orderRepository.findAll().stream().map(item -> modelMapper.map(item, OrdersDto.class)).toList();
     }
 
-    public List<OrdersEntity> getTopOrders(int limit) {
-        // Logic để lấy đơn hàng có tổng tiền cao nhất
-        return new ArrayList<>();
+    public List<OrdersDto> getTopOrders(int limit) {
+        return orderRepository.findTopOrders(limit).stream().map(item -> modelMapper.map(item, OrdersDto.class)).toList();
     }
 
     public List<OrdersDto> findByDate(LocalDateTime startDate, LocalDateTime endDate) {

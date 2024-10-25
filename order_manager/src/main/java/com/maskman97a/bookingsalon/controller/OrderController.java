@@ -28,12 +28,19 @@ public class OrderController extends BaseController {
                             @RequestParam(defaultValue = "10") int limit) {
 
         String formattedEndDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
         List<OrdersDto> orders = orderService.findByDate(!DataUtil.isNullObject(startDate) ? DateUtil.parseStringToLocalDateTime(startDate) : LocalDateTime.now(),
                 !DataUtil.isNullObject(endDate) ? DateUtil.parseStringToLocalDateTime(endDate) : LocalDateTime.now());
         model.addAttribute("orders", orders);
         model.addAttribute("startDate", !DataUtil.isNullObject(startDate) ? startDate : formattedEndDate);
         model.addAttribute("endDate", !DataUtil.isNullObject(startDate) ? endDate : formattedEndDate);
+        model.addAttribute("limit", limit);
+        return "orders/list";
+    }
+
+    @GetMapping("/top-orders")
+    public String getTopOrders(@RequestParam(defaultValue = "10") int limit, Model model) {
+        List<OrdersDto> topOrders = orderService.getTopOrders(limit);
+        model.addAttribute("orders", topOrders);
         model.addAttribute("limit", limit);
         return "orders/list";
     }
